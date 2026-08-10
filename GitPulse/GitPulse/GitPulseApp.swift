@@ -9,6 +9,12 @@ import SwiftUI
 
 @main
 struct GitPulseApp: App {
+    
+    init() {
+        let syncService = RepositorySyncService()
+        syncService.sync()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

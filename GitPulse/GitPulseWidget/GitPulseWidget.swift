@@ -9,52 +9,71 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+    
+    private let repositoryProvider: GitRepositoryProviding
+    private let store = SharedRepositoryStore()
+    
+    init(
+            repositoryProvider: GitRepositoryProviding = GitRepositoryProvider()
+        ) {
+            self.repositoryProvider = repositoryProvider
+        }
+    
+    private func makeSampleEntry(date: Date) -> GitPulseEntry {
+        let repository = store.load() ?? repositoryProvider.fetchRepository()
+
+        return GitPulseEntry(
+            date: date,
+            repository: repository
+        )
+    }
+    
+    func placeholder(in context: Context) -> GitPulseEntry {
+        makeSampleEntry(date: Date())
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
+    func getSnapshot(in context: Context, completion: @escaping (GitPulseEntry) -> ()) {
+        let entry = makeSampleEntry(date: Date())
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
+        var entries: [GitPulseEntry] = []
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
+            let entry = makeSampleEntry(date: entryDate)
             entries.append(entry)
         }
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
-
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct GitPulseEntry: TimelineEntry {
     let date: Date
-    let emoji: String
+    let repository: GitRepository
 }
 
 struct GitPulseWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            HStack {
-                Text("Time:")
-                Text(entry.date, style: .time)
-            }
+        VStack(alignment: .leading, spacing: 8) {
+            Text(entry.repository.projectName)
+                .font(.headline)
 
-            Text("Emoji:")
-            Text(entry.emoji)
+            Text(entry.repository.branch)
+                .font(.subheadline)
+
+            Text(entry.repository.lastCommit)
+                .font(.caption)
+
+            Text(entry.repository.isClean ? "Clean" : "Changes")
+                .font(.caption2)
         }
     }
 }
@@ -63,7 +82,10 @@ struct GitPulseWidget: Widget {
     let kind: String = "GitPulseWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(
+            kind: kind,
+            provider: Provider()
+        ) { entry in
             if #available(macOS 14.0, *) {
                 GitPulseWidgetEntryView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
