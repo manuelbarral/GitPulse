@@ -51,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		641AD1B130349DAC00E8236E /* GitPulse.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = GitPulse.xctestplan; sourceTree = "<group>"; };
 		64339DE73027BE83001E396B /* GitPulse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitPulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64339DF43027BE84001E396B /* GitPulseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitPulseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64339DFE3027BE84001E396B /* GitPulseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitPulseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +144,7 @@
 		64339DDE3027BE83001E396B = {
 			isa = PBXGroup;
 			children = (
+				641AD1B130349DAC00E8236E /* GitPulse.xctestplan */,
 				64339E34302A02BD001E396B /* GitPulseWidgetExtension.entitlements */,
 				64339DE93027BE83001E396B /* GitPulse */,
 				64339E1B3027C321001E396B /* GitPulseWidget */,

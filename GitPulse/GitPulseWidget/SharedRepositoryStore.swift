@@ -14,12 +14,16 @@ struct SharedRepositoryStore {
     
     private let defaults: UserDefaults
     
-    init() {
-        guard let defaults = UserDefaults(suiteName: Self.suiteName) else {
-            fatalError("Unable to access shared App Group.")
+    init(defaults: UserDefaults? = nil) {
+        if let defaults {
+            self.defaults = defaults
+        } else {
+            guard let defaults = UserDefaults(suiteName: Self.suiteName) else {
+                fatalError("Unable to access shared App Group.")
+            }
+
+            self.defaults = defaults
         }
-        
-        self.defaults = defaults
     }
     
     func save(_ repository: GitRepository) {

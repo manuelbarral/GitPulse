@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "DC82D4C1-F79F-45BC-803A-08958DF8FC69",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:GitPulse.xcodeproj",
+      "identifier" : "64339DE63027BE83001E396B",
+      "name" : "GitPulse"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:GitPulse.xcodeproj",
+        "identifier" : "64339DF33027BE84001E396B",
+        "name" : "GitPulseTests"
+      }
+    }
+  ],
+  "version" : 1
+}
