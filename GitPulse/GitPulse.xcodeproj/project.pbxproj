@@ -73,8 +73,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Models/GitRepository.swift,
-				Models/GitRepositoryProvider.swift,
-				SharedRepositoryStore.swift,
+				Services/GitRepositoryProvider.swift,
+				Services/SharedRepositoryStore.swift,
 			);
 			target = 64339DE63027BE83001E396B /* GitPulse */;
 		};
